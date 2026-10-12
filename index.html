@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You, Jiji 🌷</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(180deg, #fff6f9 0%, #ffeaf0 40%, #fceef3 100%);
+            font-family: 'Georgia', 'Times New Roman', serif;
+            position: relative;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* ============= 🌸 ANIMATED FLOWERS ============= */
+        
+        /* Base Flower Style */
+        .flower {
+            position: fixed;
+            z-index: 2;
+            pointer-events: none;
+            filter: drop-shadow(0 0 8px rgba(255, 182, 193, 0.25));
+        }
+
+        /* Tulip — Floats gently up + slight sway */
+        .tulip { content: "🌷"; font-size: 2rem; animation: floatUpSway 18s ease-in-out infinite; }
+        .tulip::before { content: "🌷"; }
+
+        /* Lily — Slower, elegant drift */
+        .lily { content: "🪷"; font-size: 2.3rem; animation: floatDrift 25s linear infinite; }
+        .lily::before { content: "🪷"; }
+
+        /* Carnation — Bobs gently up and down */
+        .carnation { content: "💮"; font-size: 1.8rem; animation: floatBob 12s ease-in-out infinite; }
+        .carnation::before { content: "💮"; }
+
+        /* Animations */
+        @keyframes floatUpSway {
+            0%   { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 0; }
+            10%  { opacity: 0.85; }
+            50%  { transform: translateY(50vh) translateX(25px) rotate(8deg); }
+            90%  { opacity: 0.85; }
+            100% { transform: translateY(-80px) translateX(-15px) rotate(-5deg); opacity: 0; }
+        }
+
+        @keyframes floatDrift {
+            0%   { transform: translateY(100vh) translateX(-30px) rotate(0deg); opacity: 0; }
+            15%  { opacity: 0.75; }
+            50%  { transform: translateY(50vh) translateX(30px) rotate(15deg); }
+            85%  { opacity: 0.75; }
+            100% { transform: translateY(-80px) translateX(-20px) rotate(-10deg); opacity: 0; }
+        }
+
+        @keyframes floatBob {
+            0%   { transform: translateY(100vh) rotate(-5deg); opacity: 0; }
+            10%  { opacity: 0.8; transform: translateY(90vh) rotate(5deg); }
+            30%  { transform: translateY(70vh) rotate(-3deg); }
+            50%  { transform: translateY(50vh) rotate(4deg); }
+            70%  { transform: translateY(30vh) rotate(-5deg); }
+            90%  { opacity: 0.8; transform: translateY(10vh) rotate(3deg); }
+            100% { transform: translateY(-80px) rotate(-2deg); opacity: 0; }
+        }
+
+        /* 🌿 Corner Decorations — Swaying */
+        .corner {
+            position: absolute;
+            font-size: 3rem;
+            opacity: 0.45;
+            z-index: 1;
+            animation: gentleSway 5s ease-in-out infinite;
+        }
+        .c1 { top: 20px; left: 20px; animation-delay: 0s; }
+        .c2 { top: 20px; right: 20px; animation-delay: 1.2s; }
+        .c3 { bottom: 20px; left: 20px; animation-delay: 2.4s; }
+        .c4 { bottom: 20px; right: 20px; animation-delay: 3.6s; }
+
+        @keyframes gentleSway {
+            0%, 100% { transform: rotate(-6deg) scale(1); }
+            50%      { transform: rotate(6deg) scale(1.05); }
+        }
+
+        /* 💌 ENVELOPE */
+        .envelope-wrap {
+            position: relative;
+            z-index: 10;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            animation: envelopeGlow 3s ease-in-out infinite;
+        }
+        @keyframes envelopeGlow {
+            0%, 100% { filter: drop-shadow(0 0 25px rgba(255, 180, 195, 0.3)); }
+            50%      { filter: drop-shadow(0 0 40px rgba(255, 180, 195, 0.5)); }
+        }
+        .envelope-wrap:hover { transform: translateY(-10px); }
+
+        .envelope {
+            width: 330px;
+            height: 205px;
+            background: linear-gradient(145deg, #f9dfe2, #f4d0d5);
+            border-radius: 6px;
+            position: relative;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.08);
+            border: 1px solid #eeced3;
+        }
+
+        .env-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(180deg, #f9dfe2, #f2c9cf);
+            clip-path: polygon(0 0, 50% 60%, 100% 0);
+            transform-origin: top;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 3;
+        }
+
+        .env-body {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 145px;
+            background: linear-gradient(180deg, #f9dfe2, #f4d0d5);
+            border-radius: 0 0 6px 6px;
+        }
+
+        .heart-seal {
+            position: absolute;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, #f08fa0, #d96a7c);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 3px 12px rgba(217, 106, 124, 0.35);
+            z-index: 4;
+            transition: all 0.4s ease;
+        }
+        .envelope-wrap:hover .heart-seal { transform: translateX(-50%) scale(1.15); }
+
+        .env-label {
+            position: absolute;
+            bottom: 35px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            color: #905666;
+            font-size: 1rem;
+            letter-spacing: 1.5px;
+            z-index: 5;
+        }
+        .env-label small { display: block; margin-top: 4px; font-size: 0.8rem; opacity: 0.7; }
+
+        .open-hint {
+            margin-top: 35px;
+            font-size: 1rem;
+            color: #a06478;
+            text-align: center;
+            animation: breathe 2.5s ease-in-out infinite;
+            z-index: 6;
+            position: relative;
+        }
+        @keyframes breathe {
+            0%, 100% { opacity: 1; }
+            50%      { opacity: 0.5; }
+        }
+
+        /* ✉️ LETTER STYLES */
+        .letter-box {
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.94);
+            padding: 45px 40px;
+            border-radius: 14px;
+            box-shadow: 
+                0 0 40px rgba(255, 180, 195, 0.18),
+                0 10px 45px rgba(0,0,0,0.05);
+            border: 1px solid rgba(255, 180, 195, 0.25);
+            line-height: 1.85;
+            color: #4b3841;
+            position: relative;
+            z-index: 10;
+            display: none;
+            animation: letterAppear 1.2s ease forwards;
+        }
+        @keyframes letterAppear {
+            from { opacity: 0; transform: translateY(25px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .top-divider, .bot-divider {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #d4a8b4;
+            margin: 5px 0 20px;
+            letter-spacing: 8px;
+            opacity: 0.55;
+        }
+        .bot-divider { margin-top: 25px; margin-bottom: 5px; }
+
+        h2 {
+            text-align: center;
+            color: #b36480;
+            margin-bottom: 25px;
+            font-size: 1.5rem;
+        }
+
+        .letter-text {
+            font-size: 1.05rem;
+            text-align: justify;
+        }
+
+        .sign-off {
+            text-align: right;
+            font-style: italic;
+            margin-top: 35px;
+            color: #8a5c70;
+            font-size: 1.05rem;
+        }
+
+        .music-note-bar {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #a06478;
+            display: none;
+            padding: 10px 20px;
+            background: rgba(255, 225, 232, 0.5);
+            border-radius: 25px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 🌿 Corner Decorations -->
+    <div class="corner c1">🌷</div>
+    <div class="corner c2">🪷</div>
+    <div class="corner c3">💮</div>
+    <div class="corner c4">🌷</div>
+
+    <!-- 🌸 Generate Floating Flowers -->
+    <script>
+        const flowerData = [
+            { type: 'tulip', emoji: '🌷', count: 14 },
+            { type: 'lily', emoji: '🪷', count: 10 },
+            { type: 'carnation', emoji: '💮', count: 12 }
+        ];
+
+        flowerData.forEach(group => {
+            for (let i = 0; i < group.count; i++) {
+                const el = document.createElement('div');
+                el.classList.add('flower', group.type);
+                el.style.position = 'fixed';
+                el.style.left = `${Math.random() * 100}%`;
+                el.style.bottom = '-50px';
+                el.style.zIndex = '2';
+                el.style.pointerEvents = 'none';
+                const size = 1.2 + Math.random() * 1.3;
+                const delay = Math.random() * 25;
+                const dur = 15 + Math.random() * 20;
+                el.style.fontSize = `${size}rem`;
+                el.style.animationDelay = `${delay}s`;
+                el.style.animationDuration = `${dur}s`;
+                document.body.appendChild(el);
+            }
+        });
+    </script>
+
+    <!-- 💌 ENVELOPE -->
+    <div class="envelope-wrap" id="envWrap" onclick="openIt()">
+        <div class="envelope">
+            <div class="env-flap" id="flap"></div>
+            <div class="env-body"></div>
+            <div class="heart-seal">❤️</div>
+            <div class="env-label">✨ For Jiji ✨<small>tap to open</small></div>
+        </div>
+    </div>
+
+    <p class="open-hint" id="hint">🌷 A letter waits for you 🌷</p>
+
+    <!-- ✉️ THE LETTER -->
+    <div class="letter-box" id="theLetter">
+        <div class="top-divider">🌷 🪷 💮 🪷 🌷</div>
+        
+        <h2>💌 My Dearest Jiji,</h2>
+        
+        <div class="letter-text">
+            <p>
+                Hi, my dearest Jiji ganda imnida.
+                <br><br>
+                I know we're only just getting to know each other, and this message might catch you off guard, but I just want to confess my true feelings for you. I've been thinking about how to say this for a while, and I figured it's better to be honest with you than to keep these feelings to myself.
+                <br><br>
+                I find myself slowly catching feelings for you, and yes, I like you, Jiji. I like the way you make me want to know more about you, and I like how I'm slowly becoming interested in the little things about you. If I'm given a chance, I want to pursue you. Gusto kitang kilalanin nang mas malalim pa. Gusto kitang kabisaduhin — simula sa mga bagay na gusto mo, hanggang sa mga bagay na hindi mo gusto. I want to know the little things that make you happy, the things that make you upset, your favorite things, your dreams, and even the little habits you might not notice about yourself. I want to know you for who you truly are, beyond the things you show to other people.
+                <br><br>
+                I know things might seem to be moving too fast, especially knowing na kakagaling mo pa lang sa breakup. I understand that you might still need time for yourself, and I don't want you to feel pressured to entertain my feelings or give me an answer right away. Don't worry, Jiji — I'm not rushing you or expecting you to be ready for something new immediately. I respect your pace, and I want you to take all the time you need. I'm willing to get to know you slowly and let things happen naturally, without forcing anything between us.
+                <br><br>
+                I don't want you to think that I'm here because I'm looking for something temporary. If you give me a chance, I want to show you my intentions through my actions, not only through my words. I want to be someone you feel comfortable talking to — someone na masusumbongan mo ng mga bagay-bagay, and someone who listens when you need to let things out. I want to know the happy side of you, but I also want to understand you on the days when things aren't going well. I know I still have so much to learn about you, and I'm willing to take my time doing that.
+                <br><br>
+                I'll be here by your side, Jiji, without making you feel like you owe me anything in return. I don't expect you to like me back just because I'm being honest about my feelings. I simply want you to know where my heart is right now. Whatever your response might be, I'll respect it because your feelings matter too.
+                <br><br>
+                I just want to express what I truly feel for you, and I'm not expecting anything in return. With or without a chance, at least I know I was brave enough to tell you how I genuinely feel. Ayaw kong dumating sa point na pagsisisihan kong hindi ko sinabi sa'yo ang nararamdaman ko habang may pagkakataon pa. That's why I gathered the courage to write this heartfelt message to you.
+                <br><br>
+                So, my dearest Jiji, I like you. And if you'll allow me, I'd love to pursue you and get to know you more, one step at a time. I don't know where this will lead us, but I'd like to give it a chance and see where things take us. No pressure, no rushing, and no need to force anything. I just want to start by being honest with you and showing you that my intentions are genuine.
+                <br><br>
+                Whatever happens after this, I'm glad I got the courage to tell you how I feel. And if you give me a chance, I'll be happy to take things slowly with you. I hope that, little by little, I get to know more about the person behind the name Jiji — and hopefully, you'll get to know me more, too.
+            </p>
+        </div>
+
+        <p class="sign-off">Yours,<br>_________ 💮</p>
+        
+        <div class="bot-divider">💮 🪷 🌷 🪷 💮</div>
+        
+        <p class="music-note-bar" id="musicBar">🎵 Click anywhere once for music 💌</p>
+    </div>
+
+    <!-- 🎵 BACKGROUND MUSIC -->
+    <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+        Audio not supported.
+    
+
+    <script>
+        let isOpen = false;
+
+        function openIt() {
+            if (isOpen) return;
+            isOpen = true;
+
+            // Open envelope animation
+            document.getElementById('flap').style.transform = 'rotateX(180deg)';
+            document.getElementById('envWrap').style.transform = 'translateY(-25px) scale(0.92)';
+            document.getElementById('envWrap').style.opacity = '0';
+            document.getElementById('hint').style.opacity = '0';
+
+            setTimeout(() => {
+                document.getElementById('envWrap').style.display = 'none';
+                document.getElementById('theLetter').style.display = 'block';
+                document.getElementById('musicBar').style.display = 'block';
+                document.getElementById('theLetter').scrollIntoView({ behavior: 'smooth' });
+            }, 750);
+        }
+
+        // Play music on first click
+        document.addEventListener('click', function startAudio() {
+            const audio = document.getElementById('bgMusic');
+            audio.volume = 0.12;
+            audio.play().then(() => {
+                document.getElementById('musicBar').innerHTML = '🎵 Playing: Nahanap Kita — Amiel Sol 🌷';
+            }).catch(() => {
+                document.getElementById('musicBar').innerHTML = '🔇 Click once more to play music 💌';
+            });
+        }, { once: false });
+    </script>
+
+</body>
+</html>
