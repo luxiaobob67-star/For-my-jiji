@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -34,15 +35,15 @@
             filter: drop-shadow(0 0 8px rgba(255, 182, 193, 0.25));
         }
 
-        /* Tulip — Floats gently up + slight sway */
+        /* Tulip   Floats gently up + slight sway */
         .tulip { content: "🌷"; font-size: 2rem; animation: floatUpSway 18s ease-in-out infinite; }
         .tulip::before { content: "🌷"; }
 
-        /* Lily — Slower, elegant drift */
+        /* Lily   Slower, elegant drift */
         .lily { content: "🪷"; font-size: 2.3rem; animation: floatDrift 25s linear infinite; }
         .lily::before { content: "🪷"; }
 
-        /* Carnation — Bobs gently up and down */
+        /* Carnation   Bobs gently up and down */
         .carnation { content: "💮"; font-size: 1.8rem; animation: floatBob 12s ease-in-out infinite; }
         .carnation::before { content: "💮"; }
 
@@ -73,7 +74,7 @@
             100% { transform: translateY(-80px) rotate(-2deg); opacity: 0; }
         }
 
-        /* 🌿 Corner Decorations — Swaying */
+        /* 🌿 Corner Decorations   Swaying */
         .corner {
             position: absolute;
             font-size: 3rem;
@@ -295,6 +296,84 @@
     </div>
 
     <p class="open-hint" id="hint">🌷 A letter waits for you 🌷</p>
+
+    <!-- ✉️ THE LETTER -->
+    <div class="letter-box" id="theLetter">
+        <div class="top-divider">🌷 🪷 💮 🪷 🌷</div>
+        
+        <h2>💌 For You My Jiji 💌</h2>
+        
+        <div class="letter-text">
+            <p>
+                Hi, my dearest Jiji ganda imnida.
+                <br><br>
+                I know we're only just getting to know each other, and this message might catch you off guard, but I just want to confess my true feelings for you. I've been thinking about how to say this for a while, and I figured it's better to be honest with you than to keep these feelings to myself.
+                <br><br>
+                I find myself slowly catching feelings for you, and yes, I like you, Jiji. I like the way you make me want to know more about you, and I like how I'm slowly becoming interested in the little things about you. If I'm given a chance, I want to pursue you. Gusto kitang kilalanin nang mas malalim pa. Gusto kitang kabisaduhin   simula sa mga bagay na gusto mo, hanggang sa mga bagay na hindi mo gusto. I want to know the little things that make you happy, the things that make you upset, your favorite things, your dreams, and even the little habits you might not notice about yourself. I want to know you for who you truly are, beyond the things you show to other people.
+                <br><br>
+                I know things might seem to be moving too fast, especially knowing na kakagaling mo pa lang sa breakup. I understand that you might still need time for yourself, and I don't want you to feel pressured to entertain my feelings or give me an answer right away. Don't worry, Jiji   I'm not rushing you or expecting you to be ready for something new immediately. I respect your pace, and I want you to take all the time you need. I'm willing to get to know you slowly and let things happen naturally, without forcing anything between us.
+                <br><br>
+                I don't want you to think that I'm here because I'm looking for something temporary. If you give me a chance, I want to show you my intentions through my actions, not only through my words. I want to be someone you feel comfortable talking to   someone na masusumbongan mo ng mga bagay-bagay, and someone who listens when you need to let things out. I want to know the happy side of you, but I also want to understand you on the days when things aren't going well. I know I still have so much to learn about you, and I'm willing to take my time doing that.
+                <br><br>
+                I'll be here by your side, Jiji, without making you feel like you owe me anything in return. I don't expect you to like me back just because I'm being honest about my feelings. I simply want you to know where my heart is right now. Whatever your response might be, I'll respect it because your feelings matter too.
+                <br><br>
+                I just want to express what I truly feel for you, and I'm not expecting anything in return. With or without a chance, at least I know I was brave enough to tell you how I genuinely feel. Ayaw kong dumating sa point na pagsisisihan kong hindi ko sinabi sa'yo ang nararamdaman ko habang may pagkakataon pa. That's why I gathered the courage to write this heartfelt message to you.
+                <br><br>
+                So, my dearest Jiji, I like you. And if you'll allow me, I'd love to pursue you and get to know you more, one step at a time. I don't know where this will lead us, but I'd like to give it a chance and see where things take us. No pressure, no rushing, and no need to force anything. I just want to start by being honest with you and showing you that my intentions are genuine.
+                <br><br>
+                Whatever happens after this, I'm glad I got the courage to tell you how I feel. And if you give me a chance, I'll be happy to take things slowly with you. I hope that, little by little, I get to know more about the person behind the name Jiji   and hopefully, you'll get to know me more, too.
+            </p>
+        </div>
+
+        <p class="sign-off">Yours,<br>Aubrey/ Putintin💮</p>
+        
+        <div class="bot-divider">💮 🪷 🌷 🪷 💮</div>
+        
+        <p class="music-note-bar" id="musicBar">🎵 Click anywhere once for music 💌</p>
+    </div>
+
+    <!-- 🎵 BACKGROUND MUSIC -->
+    <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+        Audio not supported.
+    
+
+    <script>
+        let isOpen = false;
+
+        function openIt() {
+            if (isOpen) return;
+            isOpen = true;
+
+            // Open envelope animation
+            document.getElementById('flap').style.transform = 'rotateX(180deg)';
+            document.getElementById('envWrap').style.transform = 'translateY(-25px) scale(0.92)';
+            document.getElementById('envWrap').style.opacity = '0';
+            document.getElementById('hint').style.opacity = '0';
+
+            setTimeout(() => {
+                document.getElementById('envWrap').style.display = 'none';
+                document.getElementById('theLetter').style.display = 'block';
+                document.getElementById('musicBar').style.display = 'block';
+                document.getElementById('theLetter').scrollIntoView({ behavior: 'smooth' });
+            }, 750);
+        }
+
+        // Play music on first click
+        document.addEventListener('click', function startAudio() {
+            const audio = document.getElementById('bgMusic');
+            audio.volume = 0.12;
+            audio.play().then(() => {
+                document.getElementById('musicBar').innerHTML = '🎵 Playing: Nahanap Kita   Amiel Sol 🌷';
+            }).catch(() => {
+                document.getElementById('musicBar').innerHTML = '🔇 Click once more to play music 💌';
+            });
+        }, { once: false });
+    </script>
+
+</body>
+</html>
+t">🌷 A letter waits for you 🌷</p>
 
     <!-- ✉️ THE LETTER -->
     <div class="letter-box" id="theLetter">
